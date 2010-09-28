@@ -55,8 +55,15 @@ module Akephalos
     def value=(value)
       case tag_name
       when "textarea"
-        @_node.setText(value)
+        @_node.setText("")
       when "input"
+        @_node.setValueAttribute("") if @_node.getAttribute("type") != "file"
+      end
+      if @_node.getAttribute("type") != "file"
+        value.each_char do |c|
+          @_node.type(c)
+        end
+      else
         @_node.setValueAttribute(value)
       end
     end
