@@ -28,6 +28,7 @@ else
           Filter.new(client)
           client.setAjaxController(HtmlUnit::NicelyResynchronizingAjaxController.new)
           client.setCssErrorHandler(HtmlUnit::SilentCssErrorHandler.new)
+          client.setThrowExceptionOnScriptError(false);
 
           client
         end
