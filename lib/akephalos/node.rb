@@ -109,6 +109,7 @@ module Akephalos
     # @param [String] JavaScript event name
     def fire_event(name)
       @_node.fireEvent(name)
+      wait_for_jobs
     end
 
     # @return [String] the node's tag name

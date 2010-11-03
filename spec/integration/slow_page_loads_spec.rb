@@ -28,6 +28,12 @@ describe Capybara::Session do
         @session.fill_in('Type in me', :with => 'text')
         @session.should have_xpath("//p[contains(.,'Loaded!')]")
       end
+
+      it "should wait after a manual trigger" do
+        @session.visit('/slow_ajax_load')
+        @session.locate(:css, '#ajax_load').trigger('click')
+        @session.should have_xpath("//p[contains(.,'Loaded!')]")
+      end
     end
 
   end
