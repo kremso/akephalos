@@ -22,6 +22,14 @@ describe Capybara::Session do
       end
     end
 
+    context "slow event handlers" do
+      it "should wait after typing" do
+        @session.visit('/slow_ajax_load')
+        @session.fill_in('Type in me', :with => 'text')
+        @session.should have_xpath("//p[contains(.,'Loaded!')]")
+      end
+    end
+
   end
 end
 

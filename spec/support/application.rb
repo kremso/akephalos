@@ -16,11 +16,15 @@ class Application < TestApp
          $('body').load('/slow_page');
          return false;
        });
+       $('#slow_type').keydown(function () {
+         $('body').load('/slow_page');
+       });
       });
     </script>
   </head>
   <body>
     <a href="#" id="ajax_load">Click me</a>
+    <label for="slow_type">Type in me</label><input type="text" id="slow_type">
   </body>
    HTML
   end

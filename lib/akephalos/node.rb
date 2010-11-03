@@ -49,7 +49,7 @@ module Akephalos
       end
     end
 
-    # Set the value of the form input.
+    # Set the value of the form input and then wait for any keypress events.
     #
     # @param [String] value
     def value=(value)
@@ -66,6 +66,7 @@ module Akephalos
       else
         @_node.setValueAttribute(value)
       end
+      wait_for_jobs
     end
 
     # Select an option from a select box by its value.
@@ -125,8 +126,7 @@ module Akephalos
     # fire.
     def click
       @_node.click
-      @_node.getPage.getEnclosingWindow.getJobManager.waitForJobs(1000)
-      @_node.getPage.getEnclosingWindow.getJobManager.waitForJobsStartingBefore(1000)
+      wait_for_jobs
     end
 
     # Search for child nodes which match the given XPath selector.
@@ -137,6 +137,13 @@ module Akephalos
       nodes = @_node.getByXPath(selector).map { |node| Node.new(node) }
       @nodes << nodes
       nodes
+    end
+
+    private
+
+    def wait_for_jobs
+      @_node.getPage.getEnclosingWindow.getJobManager.waitForJobs(1000)
+      @_node.getPage.getEnclosingWindow.getJobManager.waitForJobsStartingBefore(1000)
     end
   end
 
